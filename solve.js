@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-// Node.js solution (no Python). Works with very large integers via BigInt.
 
-// ---------- Helpers: BigInt base decode ----------
 function charToVal(ch) {
   const c = ch.toLowerCase();
   if (c >= '0' && c <= '9') return c.charCodeAt(0) - '0'.charCodeAt(0);
@@ -20,7 +18,7 @@ function decodeBaseToBigInt(str, base) {
   return acc;
 }
 
-// ---------- Helpers: BigInt fraction arithmetic ----------
+
 function absBig(n) { return n < 0n ? -n : n; }
 function gcdBig(a, b) {
   a = absBig(a);
@@ -50,13 +48,7 @@ function mulFrac(a, b) {
   return normalizeFrac(an * bn, ad * bd);
 }
 
-// ---------- Lagrange interpolation at x = 0 (P(0) = c) ----------
-/*
-  Given k distinct points (x_i, y_i), the Lagrange basis at x=0 is:
-  L_i(0) = Π_{j≠i} (-x_j) / (x_i - x_j)
-  Then P(0) = Σ y_i * L_i(0)
-  We keep exact rationals as BigInt fractions and reduce; the final should be an integer.
-*/
+
 function interpolateAtZero(points) {
   // points: Array<{x: BigInt, y: BigInt}>
   let sum = [0n, 1n]; // fraction accumulator
